@@ -1,29 +1,14 @@
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-
-# Load Kaggle dataset directly (already attached in notebook)
 df = pd.read_excel("/kaggle/input/social-media-engagement-report/social_media_engagement_data.xlsx")
-
-# Standardize column names
 df.columns = df.columns.str.strip().str.lower()
-
-# Create graph dataset using Kaggle columns
-# Use platform as source and post type as target
 graph_df = df[['platform', 'post type']].dropna()
 graph_df.columns = ['source', 'target']
-
-# Build graph
 G = nx.from_pandas_edgelist(graph_df, 'source', 'target')
-
-# Apply PageRank
 pr = nx.pagerank(G)
-
-# Print PageRank scores
 print("PageRank Scores:")
 print(pr)
-
-# Draw graph
 nx.draw(G, with_labels=True)
 plt.title("Page Ranking Graph")
 plt.show()
@@ -36,26 +21,15 @@ plt.show()
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-
-# Create graph dataset directly (no download needed)
 data = {
     'source': ['A', 'A', 'B', 'C', 'D', 'E'],
     'target': ['B', 'C', 'C', 'D', 'E', 'A']
 }
-
 df = pd.DataFrame(data)
-
-# Create graph
 G = nx.from_pandas_edgelist(df, 'source', 'target')
-
-# Apply PageRank
 pr = nx.pagerank(G)
-
-# Print PageRank scores
 print("PageRank Scores:")
 print(pr)
-
-# Draw graph
 nx.draw(G, with_labels=True)
 plt.title("Page Ranking Graph")
 plt.show()
