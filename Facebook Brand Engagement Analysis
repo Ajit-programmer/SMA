@@ -1,0 +1,99 @@
+import kagglehub
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+# Step 1: Download dataset
+path = kagglehub.dataset_download("aliredaelblgihy/social-media-engagement-report")
+
+print("Path to dataset files:", path)
+print("Files in dataset folder:", os.listdir(path))
+
+# Step 2: Load Excel dataset
+file_path = os.path.join(path, "social_media_engagement_data.xlsx")
+df = pd.read_excel(file_path)
+
+# Step 3: Show first rows
+print("\nFirst 5 Rows of Dataset:")
+print(df.head())
+
+# Step 4: Show column names
+print("\nColumns in Dataset:")
+print(df.columns)
+
+# Step 5: Standardize column names (remove spaces)
+df.columns = df.columns.str.strip().str.lower()
+
+# Step 6: Create engagement column
+df['engagement'] = df['likes'] + df['comments'] + df['shares']
+
+# Step 7: Average engagement by platform
+platform_engagement = df.groupby('platform')['engagement'].mean()
+
+print("\nAverage Engagement by Platform:")
+print(platform_engagement)
+
+# Step 8: Plot bar chart
+platform_engagement.plot(kind='bar')
+plt.title("Average Social Media Engagement by Platform")
+plt.xlabel("Platform")
+plt.ylabel("Average Engagement")
+plt.xticks(rotation=45)
+plt.show()
+
+
+
+
+#own dataset
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {
+    'brand': ['Nike', 'Adidas', 'Puma', 'Nike', 'Adidas'],
+    'likes': [500, 450, 300, 550, 470],
+    'comments': [40, 35, 20, 50, 38],
+    'shares': [25, 20, 15, 30, 22]
+}
+
+df = pd.DataFrame(data)
+
+df['engagement'] = df['likes'] + df['comments'] + df['shares']
+
+print(df)
+
+df.groupby('brand')['engagement'].mean().plot(kind='bar')
+plt.title("Brand Engagement on Facebook")
+plt.ylabel("Engagement")
+plt.show()
+
+
+
+
+
+
+
+#theory
+Facebook is a social networking platform where brands interact with users using posts.
+Brand engagement is measured using:
+
+Likes
+Comments
+Shares
+
+Higher engagement means better audience interaction and stronger brand reach.
+
+Code Explanation
+Dataset containing brand post details is created/read.
+
+Total engagement is calculated as:
+
+Engagement = Likes + Comments + Shares
+
+Average engagement of each brand is calculated.
+Bar graph is plotted for comparison.
+Output
+Engagement values
+Bar chart of brand engagement
+Conclusion
+
+Thus, Facebook brand engagement helps measure user interaction and brand popularity.
