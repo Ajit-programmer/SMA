@@ -4,31 +4,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import os
-
-# Step 1: Download dataset from Kaggle
 path = kagglehub.dataset_download("aliredaelblgihy/social-media-engagement-report")
-
 print("Path to dataset files:", path)
 print("Files in dataset folder:", os.listdir(path))
-
-# Step 2: Load Excel file
 file_path = os.path.join(path, "social_media_engagement_data.xlsx")
 df = pd.read_excel(file_path)
-
-# Step 3: Standardize column names
 df.columns = df.columns.str.strip().str.lower()
-
-# Step 4: Select required features
 X = df[['likes', 'comments']]
-
-# Step 5: Apply K-Means Clustering
 kmeans = KMeans(n_clusters=3, random_state=0)
 df['cluster'] = kmeans.fit_predict(X)
-
-# Step 6: Print first rows
 print(df[['likes', 'comments', 'cluster']].head())
-
-# Step 7: Plot clusters
 plt.scatter(df['likes'], df['comments'], c=df['cluster'])
 plt.xlabel("Likes")
 plt.ylabel("Comments")
@@ -41,21 +26,15 @@ plt.show()
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-
 data = {
     'likes': [100, 200, 150, 300, 250],
     'comments': [10, 20, 15, 25, 18]
 }
-
 df = pd.DataFrame(data)
-
 X = df[['likes', 'comments']]
-
 kmeans = KMeans(n_clusters=2, random_state=0)
 df['cluster'] = kmeans.fit_predict(X)
-
 print(df)
-
 plt.scatter(df['likes'], df['comments'], c=df['cluster'])
 plt.xlabel("Likes")
 plt.ylabel("Comments")
