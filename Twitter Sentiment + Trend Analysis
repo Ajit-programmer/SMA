@@ -1,0 +1,115 @@
+import kagglehub
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+# Download dataset
+path = kagglehub.dataset_download("kazanova/sentiment140")
+
+# File path
+file_path = os.path.join(path, "training.1600000.processed.noemoticon.csv")
+
+# Column names
+cols = ['sentiment', 'id', 'date', 'query', 'user', 'tweet']
+
+# Load dataset
+df = pd.read_csv(file_path, encoding='latin-1', header=None, names=cols)
+
+print(df.head())
+print(df.columns)
+
+# Sentiment count
+print(df['sentiment'].value_counts())
+
+# Sentiment graph
+df['sentiment'].value_counts().plot(kind='bar')
+plt.title("Sentiment Analysis")
+plt.show()
+
+# Trend analysis
+df['date'] = pd.to_datetime(df['date'], errors='coerce')
+df.groupby(df['date'].dt.date).size().head(20).plot()
+plt.title("Tweet Trend Over Time")
+plt.show()
+
+# Tweet length graph
+df['tweet_length'] = df['tweet'].astype(str).apply(len)
+plt.scatter(df.index[:500], df['tweet_length'][:500])
+plt.title("Tweet Length Distribution")
+plt.xlabel("Tweet Index")
+plt.ylabel("Tweet Length")
+plt.show()
+
+
+
+
+
+
+
+
+#own dataset
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Create own dataset
+data = {
+    'tweet': [
+        'I love Python',
+        'This is bad',
+        'Amazing product',
+        'Worst service',
+        'Very useful app'
+    ],
+    'sentiment': ['positive', 'negative', 'positive', 'negative', 'positive'],
+    'followers': [120, 80, 200, 50, 170],
+    'date': ['2024-01-01', '2024-01-02', '2024-01-02', '2024-01-03', '2024-01-03']
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+
+# Sentiment count
+print(df['sentiment'].value_counts())
+
+df['sentiment'].value_counts().plot(kind='bar')
+plt.title("Sentiment Analysis")
+plt.show()
+
+# Trend analysis
+df['date'] = pd.to_datetime(df['date'])
+df.groupby(df['date'].dt.date).size().plot()
+plt.title("Tweet Trend Over Time")
+plt.show()
+
+# Follower graph
+plt.scatter(df.index, df['followers'])
+plt.title("Follower Distribution")
+plt.xlabel("Users")
+plt.ylabel("Followers")
+plt.show()
+
+
+
+
+#Theory
+
+Twitter is a microblogging platform where users post short messages called tweets.
+Twitter data can be analyzed to understand user opinion, tweet trends, and follower distribution.
+
+Sentiment Analysis finds whether tweets are positive or negative
+Trend Analysis shows tweet activity over time
+Follower Analysis shows user popularity based on followers
+Code Explanation
+A dataset containing tweets is created/read.
+Sentiment count is calculated.
+Bar graph is plotted for sentiment.
+Trend graph is plotted using date.
+Scatter plot is used for follower distribution.
+Output
+Sentiment bar chart
+Tweet trend line graph
+Follower scatter graph
+Conclusion
+
+Thus, Twitter data can be analyzed to understand public opinion, tweet activity trends, and follower behavior.
