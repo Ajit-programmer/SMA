@@ -5,48 +5,24 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-
-# Step 1: Download dataset from Kaggle
 path = kagglehub.dataset_download("aliredaelblgihy/social-media-engagement-report")
-
 print("Path to dataset files:", path)
 print("Files in dataset folder:", os.listdir(path))
-
-# Step 2: Load Excel file
 file_path = os.path.join(path, "social_media_engagement_data.xlsx")
 df = pd.read_excel(file_path)
-
-# Step 3: Standardize columns
 df.columns = df.columns.str.strip().str.lower()
-
-# Step 4: Print available columns
 print("\nAvailable Columns:")
 print(df.columns)
-
-# Step 5: Use existing numeric columns from dataset
-# Replace watch_time with shares (since watch_time is not available)
 X = df[['likes', 'comments', 'shares']]
-
-# Step 6: Create target column (subscribed)
-# Simulated subscription behavior
 df['subscribed'] = ((df['likes'] + df['comments'] + df['shares']) >
                     (df['likes'] + df['comments'] + df['shares']).median()).astype(int)
-
 y = df['subscribed']
-
-# Step 7: Split data
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
-
-# Step 8: Train model
 model = LogisticRegression()
 model.fit(X_train, y_train)
-
-# Step 9: Predict
 pred = model.predict(X_test)
-
-# Step 10: Accuracy
 print("\nAccuracy:", accuracy_score(y_test, pred))
 
 
@@ -58,26 +34,19 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-
 data = {
     'watch_time': [10, 20, 15, 30, 25, 35, 40, 12],
     'likes': [1, 3, 2, 5, 4, 6, 7, 1],
     'comments': [0, 1, 1, 2, 2, 3, 4, 0],
     'subscribed': [0, 0, 0, 1, 1, 1, 1, 0]
 }
-
 df = pd.DataFrame(data)
-
 X = df[['watch_time', 'likes', 'comments']]
 y = df['subscribed']
-
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 model = LogisticRegression()
 model.fit(X_train, y_train)
-
 pred = model.predict(X_test)
-
 print("Accuracy:", accuracy_score(y_test, pred))
 
 
