@@ -1,18 +1,9 @@
 #dataset
 import pandas as pd
-
-# Load Kaggle dataset directly
 df = pd.read_excel("/kaggle/input/social-media-engagement-report/social_media_engagement_data.xlsx")
-
-# Standardize column names
 df.columns = df.columns.str.strip().str.lower()
-
-# Create rating from engagement
 df['rating'] = df['likes'] + df['comments'] + df['shares']
-
-# Recommendation Engine
 recommend = df.groupby('platform')['rating'].mean().sort_values(ascending=False)
-
 print("Top Recommended Places:")
 print(recommend.head())
 
@@ -22,21 +13,13 @@ print(recommend.head())
 
 #owndataset
 import pandas as pd
-
-# Create sample Foursquare dataset
 data = {
     'user_id': [101, 102, 103, 104, 105, 106],
     'place': ['Cafe ABC', 'Park View', 'Cafe ABC', 'Mall Plaza', 'Park View', 'Cafe ABC'],
     'rating': [4.5, 4.0, 5.0, 3.8, 4.2, 4.8]
 }
-
-# Convert into DataFrame
 df = pd.DataFrame(data)
-
-# Recommendation logic
 recommend = df.groupby('place')['rating'].mean().sort_values(ascending=False)
-
-# Display top recommended places
 print("Top Recommended Places:")
 print(recommend.head())
 
