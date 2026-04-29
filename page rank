@@ -1,0 +1,93 @@
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Load Kaggle dataset directly (already attached in notebook)
+df = pd.read_excel("/kaggle/input/social-media-engagement-report/social_media_engagement_data.xlsx")
+
+# Standardize column names
+df.columns = df.columns.str.strip().str.lower()
+
+# Create graph dataset using Kaggle columns
+# Use platform as source and post type as target
+graph_df = df[['platform', 'post type']].dropna()
+graph_df.columns = ['source', 'target']
+
+# Build graph
+G = nx.from_pandas_edgelist(graph_df, 'source', 'target')
+
+# Apply PageRank
+pr = nx.pagerank(G)
+
+# Print PageRank scores
+print("PageRank Scores:")
+print(pr)
+
+# Draw graph
+nx.draw(G, with_labels=True)
+plt.title("Page Ranking Graph")
+plt.show()
+
+
+
+
+
+#own Dataset
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create graph dataset directly (no download needed)
+data = {
+    'source': ['A', 'A', 'B', 'C', 'D', 'E'],
+    'target': ['B', 'C', 'C', 'D', 'E', 'A']
+}
+
+df = pd.DataFrame(data)
+
+# Create graph
+G = nx.from_pandas_edgelist(df, 'source', 'target')
+
+# Apply PageRank
+pr = nx.pagerank(G)
+
+# Print PageRank scores
+print("PageRank Scores:")
+print(pr)
+
+# Draw graph
+nx.draw(G, with_labels=True)
+plt.title("Page Ranking Graph")
+plt.show()
+
+
+
+
+
+
+
+Theory
+
+Page Rank is used to measure importance of nodes in a network.
+It was originally used by Google to rank web pages.
+
+In social media, Page Rank can identify:
+
+important users
+important pages
+influential nodes
+
+It works on graph structure using links between nodes.
+
+Code Explanation
+Graph dataset is created/read.
+Nodes and edges are formed.
+Page Rank algorithm is applied.
+Rank score of each node is calculated.
+Graph is visualized.
+Output
+Rank score of nodes
+Graph visualization
+Conclusion
+
+Thus, Page Rank helps identify important and influential nodes in a social network.
